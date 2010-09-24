@@ -1,4 +1,11 @@
-﻿$(document).ready(function () {
+﻿// Static definition of Month names
+Date.MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+// Static definition of weekday names
+Date.WEEKDAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+
+var d = new Date();
+
+$(document).ready(function () {
 	
 	// Templates
 
@@ -16,7 +23,16 @@
 							'<a class=" moveItemDown" href="#">Down</a> --></p>' +
 							'<textarea class="hidden" name="#" rows="5"></textarea>' +
 							'</div></li><?php endfor ?>',
+		textAreaItem : 		'<li class="hidden"><div>' +
+												'<h3 class="topicLabel">Topic 1</h3>' +
+												'<!-- <label>Title</label> -->' +
+												'<!-- <label class="discloseText">Text</label> -->' +
+												'<textarea name="#" rows="5"></textarea>' +
+												'</div></li><?php endfor ?>',
 		inputMessage :		'The quick brown fox jumps over the lazy dog.',
+		textAreaMessage__footerText: 'Association Affairs Department | NCTA | 25 Massachusetts Ave., NW, Suite 100, Washington, DC 20001\n' +
+							'Phone: 202-222-2310 • Fax: 202-222-2311\n' +
+							'Grassroots Staff: Jadz Janucik • Lisa Schoenthaler • Donna Anaya • Nilda Gumbs • Greg Saphier • Kerry Landon', 
 		textAreaMessage :	'Põdur Zagrebi tšellomängija-följetonist Ciqo külmetas kehvas garaažis. Albert osti fagotin ja töräytti puhkuvan melodian. Laŭ Ludoviko Zamenhof bongustas freŝa ĉeĥa manĝaĵo kun spicoj.',
 		contentHTML:		''
 	}
@@ -24,11 +40,12 @@
 	// Model Logic
 
 	$.ajax({ 
-		url: 'inc/lib/email_generator/tpl/ncta_key_contact_template_css.html',
+		url: 'inc/lib/email_generator/tpl/ncta_key_contact_template.html',
 		success: function (htmlResponse) {
 			createItem();
 			createItem();
 			createItem();
+			createItem(false, "#footerText");
 			tpl.contentHTML = htmlResponse;
 			refresh();
         }
@@ -59,12 +76,21 @@
 		*/
 		
 		// Pop Up Version...
-		var codeView =  window.open('','codeViewWindow','width=600,height=800');
+		/*
+		var codeView =  window.open('','codeViewWindow','width=600,height=800,menubar=1');
 		var html = '<html><head><title>Your Email</title></head><body>'+$('.previewArea iframe').contents().find('body').html().toString()+'</body></html>';
 		codeView.document.open();
 		codeView.document.write(html);
 		codeView.document.close();
-
+		*/
+		
+		// Pop Up Version...
+		//$('.previewArea iframe').contents().find('body').html().toString()
+		var fn = d.getTime();
+		$.post( "savemailcode.php", { "fn" : fn, "_c" : $('.previewArea iframe').contents().find('body').html().toString() }, function(){
+			var codeView =  window.open('emailview.php?_c=' + fn,'codeViewWindow','width=600,height=800,menubar=1,scrolling=1');
+		});
+		
 	    return false;
 	});
 	$('.codeDisplay p a').click(function () {
@@ -72,19 +98,27 @@
 		return false;
 	});
 	
-	function createItem(afterItem) {
-		var newItem = $(tpl.topicItem);
+	function createItem(afterItem, title) {
+		var newItem = title ? $(tpl.textAreaItem) : $(tpl.topicItem);
+		var adderContainer = title ? ".textAreaAdder" : ".topicAdder";
 
 		if(typeof afterItem === 'object') {
 			$(afterItem).after(newItem);
 		} else {
-			$('.topicAdder').append(newItem);
+			$(adderContainer).append(newItem);
 		}
 		
 		$(newItem).fadeIn('slow').removeClass('hidden');
-
+		
 		$(newItem).find('input').val(tpl.inputMessage);
-		$(newItem).find('textarea').val(tpl.textAreaMessage);
+		
+		if(title) {
+			newItem.attr("title", title);
+			newItem.find(".topicLabel").text(title);
+			$(newItem).find('textarea').val(tpl.textAreaMessage__footerText);
+		} else {
+			$(newItem).find('textarea').val(tpl.textAreaMessage);
+		}
 		
 		$(newItem).mousedown(function () {
 			stopAutoPreview();
@@ -95,7 +129,7 @@
 
 		$(newItem).find('input, textarea').focus(function () {
 			if(!$(this).hasClass('active')) {
-				$(this).val('');
+				title ? null : $(this).val('');
 				$(this).addClass('active');
 			}
 		});
@@ -142,8 +176,9 @@
 	
 	function refresh() {
 		var html = $(tpl.contentHTML);
-		var indexItem = html.find('.indexItem');
-		var contentItem = html.find('.contentItem');
+		var indexItem = html.find('.indexItem').clone();
+		var contentItem = html.find('.contentItem').clone();
+		var dateItem = html.find('.dateline');
 		
 		html.find('.indexArea').html('');
 		html.find('.contentArea').html('');
@@ -156,10 +191,26 @@
 			var newContentItem = contentItem;
 			newContentItem.find('.contentItemTitle').text($(this).find('input').val());
 			newContentItem.find('.contentItemBody').html($(this).find('textarea').val().replace(/\n/g, '<br />'));
+			
 			html.find('.contentArea').append(newContentItem.clone());
+			
 		});
 		
-		$('.previewArea iframe').contents().find('body').html(html.clone());
+		$('.textAreaAdder li:not(.hidden)').each(function () {
+			var newContentItem = html.find( $(this).attr("title") );
+			
+			//console.log(html, $(this).attr("title"), newContentItem);
+			newContentItem.html($(this).find('textarea').val().replace(/\n/g, '<br />'));
+			
+			//html.find('.contentArea').append(newContentItem.clone());
+			
+		});
+		
+		dateItem.html( Date.WEEKDAY_NAMES[d.getDay()] + ",<br />" + Date.MONTH_NAMES[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() );
+		
+		tplClone = html.clone();
+			
+		$('.previewArea iframe').contents().find('body').html(tplClone.html());
 	}
 	function stopAutoPreview() {
 		window.clearInterval(refreshCycle);

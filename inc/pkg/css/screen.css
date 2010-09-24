@@ -124,6 +124,7 @@ label, textarea																	{ position: relative; float: left; clear: both; 
 /* View Taxonomy */
 
 div.appHeader 																	{ margin-bottom: 5px; padding-bottom: 5px; border-bottom: 1px solid #CCC; }
+ul.textAreaAdder,
 ul.topicAdder																	{ width: 500px; }
 div.previewArea																	{ position: fixed; top: 0; right: 0; z-index: 2; width: 650px; min-height: 100%; background: #FFF; }
 div.codeViewToggle																{ position: fixed; top: 0; right: 0; z-index: 3; width: 650px; min-height: 100%; background: #000; opacity: 0.7; }
@@ -145,12 +146,20 @@ body div.appHeader h1															{ margin-bottom: 5px; font-size: 18px; font-
 body div.appHeader h2															{ margin-bottom: 5px; font-size: 14px; }
 body div.appHeader p															{ font-size: 12px; }
 
+ul.textAreaAdder li,
 ul.topicAdder li																{ min-height: 70px; margin: 4px 0 4px 0; cursor: move; }
+ul.textAreaAdder li,
 ul.topicAdder div																{ margin-bottom: 5px; padding: 5px 0 10px 5px; background: #EEE; font-size: 11px; }
+ul.textAreaAdder div h3,
 ul.topicAdder div h3															{ margin: 5px 0; font-size: 14px; font-weight: bold; color: #333; }
+ul.textAreaAdder div label,
 ul.topicAdder div label															{ margin-bottom: 5px; font-weight: bold; color: #666; }
+ul.textAreaAdder div input,
 ul.topicAdder div input															{ width: 480px; margin-bottom: 5px; padding: 8px 5px 5px 5px; font-size: 14px; border: 1px solid #CCC; color: #EEE; font-weight: bold; }
-ul.topicAdder div textarea														{ width: 480px; padding: 5px; border: 1px solid #CCC; line-height: 16px; color: #EEE; }
+ul.textAreaAdder div textarea,
+ul.topicAdder div textarea														{ width: 480px; padding: 5px; border: 1px solid #CCC; line-height: 16px; color: #CCC; }
+ul.textAreaAdder div input.active,
+ul.textAreaAdder div textarea.active,
 ul.topicAdder div input.active,
 ul.topicAdder div textarea.active												{ color: #666; font-weight: bold; }
 
