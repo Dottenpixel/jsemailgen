@@ -1,0 +1,169 @@
+/* Fonts */
+
+@font_face 																		{ font_family: DIN; src: url(../fnt/dinma___.ttf); }
+
+
+/* Element Policies */
+
+p  a																			{ text-decoration: underline; 	}
+p  a:hover																		{ text-decoration: underline; 	}
+p  a:active																		{ text-decoration: underline; 	}
+p  a:visited																	{ text-decoration: underline; 	}
+p  strong																		{ font-weight: bold;		 	}
+   label																		{ padding-top: 5px; 			}
+textarea 																		{ resize: none; }   
+
+
+/* Globals */
+
+*.test_r																		{ border: 1px solid red 	!important; }
+*.test_g																		{ border: 1px solid green 	!important; }
+*.test_b																		{ border: 1px solid blue 	!important; }
+
+*.hidden																		{ display: none;		 			}
+*.block																			{ display: block;		 			}
+*.inline																		{ display: inline;		 			}
+
+*.ruled																			{ text-decoration: underline;		}
+*.normal																		{ font-weight: normal; color: #666;	}
+*.normal a																		{ font-weight: normal; color: #666;	}
+*.notice																		{ color: #005984;					}
+*.notice a																		{ color: #005984;					}
+*.error																			{ color: red;						}
+*.strong																		{ font-weight: bold;				}
+*.caps																			{ text-transform: uppercase;		}
+
+*.indented_1																	{ text-indent: 10px;				}
+*.indented_2																	{ text-indent: 15px;				}
+*.indented_3																	{ text-indent: 20px;				}
+
+*.inset_1																		{ margin-left: 10px;				}
+*.inset_2																		{ margin-left: 15px;				}
+*.inset_3																		{ margin-left: 20px;				}
+
+*.sprite																		{ text-indent: -999px; font-size: 2px; overflow: hidden;	}
+*.sprite a																		{ display: block; width: 100%; height: 100%; }
+
+*.rounded_a																		{ -moz-border-radius: 5px; 	-webkit-border-radius: 5px; 	}
+*.rounded_b																		{ -moz-border-radius: 7px; 	-webkit-border-radius: 7px; 	}
+*.rounded_c																		{ -moz-border-radius: 10px;	-webkit-border-radius: 10px; 	}
+*.top_rounded																	{
+																				-moz-border-radius_bottomright: 	0 !important;
+																				-moz-border-radius_bottomleft: 		0 !important;
+																				_webkit_border_bottom_right_radius: 0 !important;
+																				_webkit_border_bottom_left_radius: 	0 !important;
+																				}
+
+*.bordered																		{ border: 			1px solid #CCC; 	}
+*.bordered_l																	{ border-left: 		1px solid #CCC; 	}
+*.bordered_r																	{ border-right: 	1px solid #CCC; 	}
+*.bordered_t																	{ border-top: 		1px solid #CCC; 	}
+*.bordered_b																	{ border-bottom: 	1px solid #CCC; 	}
+
+*.dotted																		{ border: 			1px dotted #CCC;	}
+*.dotted_l																		{ border-left: 		1px dotted #CCC; 	}
+*.dotted_r																		{ border-right: 	1px dotted #CCC; 	}
+*.dotted_t																		{ border-top: 		1px dotted #CCC; 	}
+*.dotted_b																		{ border-bottom: 	1px dotted #CCC; 	}
+
+*.thick_2																		{ border-width: 	2px; }
+*.thick_3																		{ border-width: 	3px; }
+*.thick_5																		{ border-width: 	5px; }
+
+*.scroll																		{ overflow: auto; }
+
+*.bg_1																			{ background: #CCC; }
+*.bg_2																			{ background: url(../img/bg/unspecified_bg.gif) no_repeat; }
+*.bg_3																			{ background: url(../img/bg/unspecified_bg.gif) no_repeat; }
+*.bg_4																			{ background: url(../img/bg/unspecified_bg.gif) no_repeat; }
+
+*.right																			{ float: right 	!important; clear: both !important; width: 100% !important; text-align: center !important; }
+*.left																			{ float: left 	!important; clear: both !important; width: 100% !important; text-align: center !important; }
+*.centered																		{ float: left 	!important; clear: both !important; width: 100% !important; text-align: center !important; }
+img.right, img.left, img.centered												{ width: auto !important; }
+
+*.right_f																		{ float: right 	!important; clear: none !important; width: auto !important; }
+*.left_f																		{ float: left 	!important; clear: none !important; width: auto !important; }
+
+div.split																		{ width: 50%   !important; clear: none !important; margin: 0 !important; }
+div.split_1																		{ width: 75px  !important; }
+div.split_2																		{ width: 125px !important; }
+div.split_3																		{ width: 250px !important; }
+div.split_4																		{ width: 500px !important; }
+
+ul.f_list																		{  }
+ul.f_list 	li																	{ float: left; clear: none; width: auto; margin-right: 5px; }
+
+ul.bulleted	li																	{ list-style-type: disc; margin-left: 24px; }
+
+
+/* Compatibility */																/* These classes enhance advanced 
+																				selector support in some browsers. 	*/
+
+input.i_t																		{  } /* input[type='text'] 			*/
+input.i_c																		{  } /* input[type='checkbox'] 		*/
+input.i_r																		{  } /* input[type='radio'] 		*/
+*.c_f																			{  } /* :first-child 				*/
+*.c_l																			{  } /* :last-child 				*/
+*.l_f																			{  } /* :first-line (use <span>)	*/
+*.imm																			{  } /* >							*/
+*.sep																			{  } /* +							*/
+*.c_1, *.c_2, *.c_3																{  } /* ...etc, :nth-child(n)		*/
+*.evn																			{  } /* ...etc, :nth-child(even)	*/
+*.odd																			{  } /* ...etc, :nth-child(odd)		*/
+
+
+/* Locked Floats */
+
+body,
+div, 	ul,  	ol,		p,		h1,
+h2,		h3,		h4,		h5,		
+label, textarea																	{ position: relative; float: left; clear: both; width: 100%; }
+
+	
+/* View Taxonomy */
+
+div.appHeader 																	{ margin-bottom: 5px; padding-bottom: 5px; border-bottom: 1px solid #CCC; }
+ul.topicAdder																	{ width: 500px; }
+div.previewArea																	{ position: fixed; top: 0; right: 0; z-index: 2; width: 650px; min-height: 100%; background: #FFF; }
+div.codeViewToggle																{ position: fixed; top: 0; right: 0; z-index: 3; width: 650px; min-height: 100%; background: #000; opacity: 0.7; }
+div.codeViewToggle:hover														{ cursor: pointer; }
+div.codeOverlay																	{ position: fixed; top: 0; left: 0; z-index: 4; width: 100%; height: 100%; background: #000; opacity: 0.7; }
+div.codeDisplay																	{ position: fixed; top: 50px; left: 50%; z-index: 5; margin-left: -250px; width: 600px; height: 600px; overflow: hidden; background: #000; }
+
+/* View Globals */
+
+
+
+/* Reader Typography */
+
+
+
+/* Instances by View */
+
+body div.appHeader h1															{ margin-bottom: 5px; font-size: 18px; font-weight: bold; }
+body div.appHeader h2															{ margin-bottom: 5px; font-size: 14px; }
+body div.appHeader p															{ font-size: 12px; }
+
+ul.topicAdder li																{ min-height: 70px; margin: 4px 0 4px 0; cursor: move; }
+ul.topicAdder div																{ margin-bottom: 5px; padding: 5px 0 10px 5px; background: #EEE; font-size: 11px; }
+ul.topicAdder div h3															{ margin: 5px 0; font-size: 14px; font-weight: bold; color: #333; }
+ul.topicAdder div label															{ margin-bottom: 5px; font-weight: bold; color: #666; }
+ul.topicAdder div input															{ width: 480px; margin-bottom: 5px; padding: 8px 5px 5px 5px; font-size: 14px; border: 1px solid #CCC; color: #EEE; font-weight: bold; }
+ul.topicAdder div textarea														{ width: 480px; padding: 5px; border: 1px solid #CCC; line-height: 16px; color: #EEE; }
+ul.topicAdder div input.active,
+ul.topicAdder div textarea.active												{ color: #666; font-weight: bold; }
+
+ul.topicAdder p																	{ width: auto; padding: 5px 10px; color: #666; font-size: 9px; cursor: default; }
+ul.topicAdder p a																{ display: inline-block; }
+ul.topicAdder p a:nth-child(1)													{ width: 45px; }
+ul.topicAdder p a:nth-child(2)													{ width: 55px; }
+ul.topicAdder p a:nth-child(3)													{ width: 77px; }
+ul.topicAdder p a:nth-child(4)													{ width: 15px; }
+ul.topicAdder p a:nth-child(5)													{ width: 30px; }
+
+div.codeViewToggle p															{ margin-top: 200px; text-align: center; color: #FFF; font-size: 36px; font-weight: bold; }
+div.codeDisplay textarea														{ width: 600px; height: 550px; }
+div.codeDisplay p																{ width: 600px; padding-top: 10px; text-align: center; color: #FFF; }
+
+body>p:last-child																{ position: fixed; right: 0; bottom: 0; width: auto; margin-top: 40px; font-size: 10px; }
