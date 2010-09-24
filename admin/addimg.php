@@ -1,25 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
-<link type="text/css" href="/css/custom-theme/jquery-ui-1.7.1.custom.css" rel="stylesheet" />	
-<link type="text/css" href="/css/admin.css" rel="stylesheet" />	
-<script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/js/jquery-ui-1.7.1.custom.min.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $(".datePicker").datepicker();
-    });
-</script>
-</head>
-
-<body>
-<div id="adminCont">
-    <div id="contentCont">
 <?php
+
+// root path
+$path = $_SERVER['DOCUMENT_ROOT'];
+
+// upload directory. path will originate from root.
+$dirname = '/charter/ncta/userimg';
+
+function display_html_headers() {
+echo <<<DISPLAY_HTML_HEAD
+
+        	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+			<html xmlns="http://www.w3.org/1999/xhtml">
+			<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<title>Untitled Document</title>
+			<link type="text/css" href="/css/custom-theme/jquery-ui-1.7.1.custom.css" rel="stylesheet" />	
+			<link type="text/css" href="/css/admin.css" rel="stylesheet" />	
+			<script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+			<script type="text/javascript" src="/js/jquery-ui-1.7.1.custom.min.js"></script>
+			<script type="text/javascript">
+			    $(function() {
+			        $(".datePicker").datepicker();
+			    });
+			</script>
+			</head>
+
+			<body>
+			<div id="adminCont">
+			    <div id="contentCont">
+
+DISPLAY_HTML_HEAD;
+	
+}
+
+function display_html_footers() {
+echo <<<DISPLAY_HTML_FOOT
+
+        		</div>
+			</div>
+			</body>
+			</html>
+
+DISPLAY_HTML_FOOT;
+	
+}
+
 function display_upload_form()
 {
+display_html_headers();	
+	
 echo <<<DISPLAY_UPLOAD_FORM
 
         	<h1>Add Newsletter <a href="viewNewsletters.php">View Newsletters</a></h1>
@@ -50,20 +79,21 @@ echo <<<DISPLAY_UPLOAD_FORM
             </form>
 
 DISPLAY_UPLOAD_FORM;
+
+display_html_footers();
 }
 
 // File Upload ****************************************************************
 
 function execute_upload()
 {
+	display_html_headers();	
+		
 	//require_once( "db_connect.php" );
 	
-    // root path
-    $path = $_SERVER['DOCUMENT_ROOT'];
-
-    // upload directory. path will originate from root.
-    $dirname = '/charter/ncta/userimg';
-
+	$path = $GLOBALS["path"];
+	$dirname = $GLOBALS["dirname"];
+	
     // permission settings for newly created folders
     $chmod = 0755;
 
@@ -92,8 +122,8 @@ function execute_upload()
             * check if the directory exists
             * if it doesnt exist, make the directory
             */
-            $dir = $path . $dirname;
-
+			$dir = $path . $dirname;
+			
             if (!is_dir($dir))
             {
                 
@@ -107,7 +137,9 @@ function execute_upload()
                     {
                         if (!mkdir($path, $chmod))
                         {
-                            unlink($file_tmp);
+                            print $dir;
+							
+							unlink($file_tmp);
                             die('<strong>Error:</strong> Directory does not exist and was unable to be created.');
                         }
                     }
@@ -177,15 +209,7 @@ function execute_upload()
                 <p><strong>View File:</strong> <a href=\"$dirname/$filename\">$filename</a></p>
                 ";
 				
-				if ($handle = opendir($dir)) {
-					while (false !== ($file = readdir($handle))) {
-						if ($file != "." && $file != "..") {
-							echo "<div><a href=\"$dirname/$file\" target=\"_blank\" >$file</a></div>\n";
-						}
-					}
-					closedir($handle);
-				}
-				
+				makeImgList();
             }
             else
             {
@@ -233,6 +257,28 @@ function execute_upload()
                 break;
         }
     }
+
+	display_html_footers();
+}
+
+function makeImgList() {
+	
+	$dir = $dir = $GLOBALS["path"] . $GLOBALS["dirname"];
+	
+	echo "<select id=\"userImgList\">";
+	
+	if ($handle = opendir($dir)) {
+		
+		while (false !== ($file = readdir($handle))) {
+			if ($file != "." && $file != "..") {
+				echo "<option value=\"http://".$_SERVER["HTTP_HOST"].$GLOBALS["dirname"]."/$file\">$file</option>\n";
+			}
+		}
+		closedir($handle);
+	}
+	
+	echo "</select>";
+
 }
 
 // Logic Code *****************************************************************
@@ -241,6 +287,10 @@ if (isset($_POST['execute']))
 {
     execute_upload();
 }
+elseif (isset($_GET['list']))
+{
+    makeImgList();
+}
 else
 {
     display_upload_form();
@@ -248,7 +298,3 @@ else
 
 
 ?>
-	</div>
-</div>
-</body>
-</html>
