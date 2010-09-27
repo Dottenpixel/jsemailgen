@@ -29,6 +29,11 @@ $(document).ready(function () {
 												'<!-- <label class="discloseText">Text</label> -->' +
 												'<textarea name="#" rows="5"></textarea>' +
 												'</div></li><?php endfor ?>',
+		imageAreaItem : 	'<li class="hidden"><div>' +
+												'<h3 class="topicLabel">Topic 1</h3>' +
+												'<div class="imgSelect"></div>' +
+												'<img src="#" />' +
+												'</div></li><?php endfor ?>',
 		inputMessage :		'The quick brown fox jumps over the lazy dog.',
 		textAreaMessage__footerText: 'Association Affairs Department | NCTA | 25 Massachusetts Ave., NW, Suite 100, Washington, DC 20001\n' +
 							'Phone: 202-222-2310 • Fax: 202-222-2311\n' +
@@ -46,6 +51,7 @@ $(document).ready(function () {
 			createItem();
 			createItem();
 			createItem(false, "#footerText");
+			createImageItem("tocImage");
 			tpl.contentHTML = htmlResponse;
 			refresh();
         }
@@ -172,12 +178,29 @@ $(document).ready(function () {
 		item.fadeOut('slow').addClass('hidden');
 	}
 	
+	function createImageItem(id) {
+		var imgItem = $(tpl.imageAreaItem);
+		$(imgItem).attr( "id", id );
+		
+		$(".imgAreaAdder").append( imgItem );
+
+		$(imgItem).find(".imgSelect").load("admin/addimg.php?list", function( data ){
+			$(imgItem).fadeIn('slow').removeClass('hidden');
+			
+			var selList = $(imgItem).find("select");
+			selList.bind("change", function(){
+				console.log( selList.val() );
+			});
+			
+		});
+	}
 	// Controller Logic
 	
 	function refresh() {
 		var html = $(tpl.contentHTML);
 		var indexItem = html.find('.indexItem').clone();
 		var contentItem = html.find('.contentItem').clone();
+		var indexImgItem = html.find('.indexImgItem').clone();
 		var dateItem = html.find('.dateline');
 		
 		html.find('.indexArea').html('');
@@ -201,6 +224,17 @@ $(document).ready(function () {
 			
 			//console.log(html, $(this).attr("title"), newContentItem);
 			newContentItem.html($(this).find('textarea').val().replace(/\n/g, '<br />'));
+			
+			//html.find('.contentArea').append(newContentItem.clone());
+			
+		});
+		
+		$('.imgAreaAdder li:not(.hidden)').each(function () {
+			var newImgItem = html.find(".indexImgItem");
+			var imgSrc = $(this).find("select").val();
+			
+			console.log(html, $(this), newImgItem, imgSrc);
+			newImgItem.html( '<img src="' + imgSrc + '"/>');
 			
 			//html.find('.contentArea').append(newContentItem.clone());
 			

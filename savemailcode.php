@@ -1,7 +1,7 @@
 <?php
 
 $filename = "emaildat/$_POST[fn].dat";
-$somecontent = $_POST["_c"];
+$somecontent = stripslashes( $_POST["_c"] );
 
 // Let's make sure the file exists and is writable first.
 if ($handle = fopen($filename, 'w')) {
@@ -21,7 +21,7 @@ if ($handle = fopen($filename, 'w')) {
     fclose($handle);
 
 } else {
-    echo "The file $filename is not writable";
+    echo "The file $filename is not writable\n";
     echo "Cannot open file ($filename)";
 }
 
