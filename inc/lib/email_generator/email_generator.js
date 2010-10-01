@@ -32,7 +32,6 @@ $(document).ready(function () {
 		imageAreaItem : 	'<li class="hidden"><div>' +
 												'<h3 class="topicLabel">Topic 1</h3>' +
 												'<div class="imgSelect"></div>' +
-												'<img src="#" />' +
 												'</div></li><?php endfor ?>',
 		inputMessage :		'The quick brown fox jumps over the lazy dog.',
 		textAreaMessage__footerText: 'Association Affairs Department | NCTA | 25 Massachusetts Ave., NW, Suite 100, Washington, DC 20001\n' +
@@ -51,7 +50,8 @@ $(document).ready(function () {
 			createItem();
 			createItem();
 			createItem(false, "#footerText");
-			createImageItem("tocImage");
+			createImageItem("header");
+			createImageItem("toc");
 			tpl.contentHTML = htmlResponse;
 			refresh();
         }
@@ -178,18 +178,18 @@ $(document).ready(function () {
 		item.fadeOut('slow').addClass('hidden');
 	}
 	
-	function createImageItem(id) {
+	function createImageItem(idpf) {
 		var imgItem = $(tpl.imageAreaItem);
-		$(imgItem).attr( "id", id );
+		$(imgItem).attr( "id", idpf + "Img" );
 		
 		$(".imgAreaAdder").append( imgItem );
 
-		$(imgItem).find(".imgSelect").load("admin/addimg.php?list", function( data ){
+		$(imgItem).find(".imgSelect").load( ("admin/addimg.php?list=" + idpf), function( data ){
 			$(imgItem).fadeIn('slow').removeClass('hidden');
 			
 			var selList = $(imgItem).find("select");
 			selList.bind("change", function(){
-				console.log( selList.val() );
+				//console.log( selList.val() );
 			});
 			
 		});
@@ -233,8 +233,8 @@ $(document).ready(function () {
 			var newImgItem = html.find(".indexImgItem");
 			var imgSrc = $(this).find("select").val();
 			
-			console.log(html, $(this), newImgItem, imgSrc);
-			newImgItem.html( '<img src="' + imgSrc + '"/>');
+			//console.log(html, $(this), newImgItem, imgSrc);
+			if ( imgSrc != "" ) newImgItem.html( '<img src="' + imgSrc + '" align="right" />');
 			
 			//html.find('.contentArea').append(newContentItem.clone());
 			

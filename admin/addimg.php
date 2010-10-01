@@ -261,17 +261,18 @@ function execute_upload()
 	display_html_footers();
 }
 
-function makeImgList() {
+function makeImgList( $imgType ) {
+	$imgsubdirname = "/charter/ncta/userimg/" . $imgType;
+	$dir = $GLOBALS["path"] . $imgsubdirname ;
 	
-	$dir = $dir = $GLOBALS["path"] . $GLOBALS["dirname"];
-	
-	echo "<select id=\"userImgList\">";
+	echo "<select id=\"$imgTypeImgList\">";
+	echo "<option value=\"\"> - No Image Selected - </option>";
 	
 	if ($handle = opendir($dir)) {
 		
 		while (false !== ($file = readdir($handle))) {
 			if ($file != "." && $file != "..") {
-				echo "<option value=\"http://".$_SERVER["HTTP_HOST"].$GLOBALS["dirname"]."/$file\">$file</option>\n";
+				echo "<option value=\"http://".$_SERVER["HTTP_HOST"].$imgsubdirname."/$file\">$file</option>\n";
 			}
 		}
 		closedir($handle);
@@ -289,7 +290,7 @@ if (isset($_POST['execute']))
 }
 elseif (isset($_GET['list']))
 {
-    makeImgList();
+    makeImgList( $_GET['list'] );
 }
 else
 {
