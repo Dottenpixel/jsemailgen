@@ -44,7 +44,7 @@ $(document).ready(function () {
 	// Model Logic
 
 	$.ajax({ 
-		url: 'inc/lib/email_generator/tpl/ncta_key_contact_template.html',
+		url: 'inc/lib/email_generator/tpl/ncta_key_contact_template_ncta.html',
 		success: function (htmlResponse) {
 			createItem();
 			createItem();
@@ -239,7 +239,7 @@ $(document).ready(function () {
 			
 		});
 		
-		dateItem.html( Date.WEEKDAY_NAMES[d.getDay()] + ",<br />" + Date.MONTH_NAMES[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() );
+		dateItem.html( Date.MONTH_NAMES[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() );
 		
 		tplClone = html.clone();
 			

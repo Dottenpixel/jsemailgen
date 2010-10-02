@@ -51,18 +51,11 @@ display_html_headers();
 	
 echo <<<DISPLAY_UPLOAD_FORM
 
-        	<h1>Add Newsletter <a href="viewNewsletters.php">View Newsletters</a></h1>
+        	<h1>Add email image</h1>
             <form method="post" action="{$_SERVER['PHP_SELF']}" enctype="multipart/form-data">
         
-            <label for="inpFile">Select Newsletter PDF file: <input id="inpFile" type="file" size="30" name="submittedFile" tabindex="1" /></label>
-            
-        
-            <label for="inpTitle">Newsletter Title: <input id="inpTitle" name="pubTitle" size="40" type="text" /></label>
-        
-            <label for="inpPubDate">Newsletter Date: <input id="inpPubDate" class="datePicker" name="pubDate" size="10" maxlength="10" type="text" /></label>
-        
-            <label for="inpDesc">Description: <textarea id="inpDesc" name="desc" rows="8" cols="40"></textarea></label>    
-            
+            <label for="inpFile">Select Image file to upload: <input id="inpFile" type="file" size="30" name="submittedFile" tabindex="1" /></label>
+                    
             <div style="display: none;" class="demo-description">
             
             <p>The datepicker is tied to a standard form input field.  Focus on the input (click, or use the tab key) to open an interactive calendar in a small overlay.  Choose a date, click elsewhere on the page (blur the input), or hit the Esc key to close. If a date is chosen, feedback is shown as the input's value.</p>
@@ -290,7 +283,8 @@ if (isset($_POST['execute']))
 }
 elseif (isset($_GET['list']))
 {
-    makeImgList( $_GET['list'] );
+    //makeImgList( $_GET['list'] );
+    makeImgList( "" );
 }
 else
 {
